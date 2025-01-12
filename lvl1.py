@@ -4,21 +4,23 @@ def lvl1():
     P1 = Player()
     all_sprites.add(P1)
 
-    bot = Bot("psi")
-    all_sprites.add(bot)
-    enemies.add(bot)
+    for i in range(5):
+        bot = Bot("psi")
+        all_sprites.add(bot)
+        enemies.add(bot)
 
-    PT01 = Platform((100, 20),(0, 300))
+    PT01 = Platform((1000, 20),(0, 300))
     all_sprites.add(PT01)
     platforms.add(PT01)
 
     while 1:
-        P1.check_collisions()
-        bot.check_collisions()
-
-        bot.action()
         for event in pygame.event.get():
             P1.controllers(event)
+        P1.check_collisions()
+
+        for bot in enemies:
+            bot.check_collisions()
+            bot.action()
 
         screen.fill((0,0,0))
 
@@ -31,8 +33,10 @@ def lvl1():
 
         if (P1.rect.y - camera.y) > HEIGHT:
             P1.respawn()
-        if (bot.rect.y - camera.y) > HEIGHT:
-            bot.kill()
+
+        for bot in enemies: 
+            if (bot.rect.y - camera.y) > HEIGHT:
+                bot.kill()
 
         pygame.display.update()
         FramePerSec.tick(FPS)
