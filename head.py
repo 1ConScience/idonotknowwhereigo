@@ -8,6 +8,7 @@ def nettoyage():
     pygame.sprite.Group.empty(platforms)
     pygame.sprite.Group.empty(enemies)
     pygame.sprite.Group.empty(InvisibleWalls)
+    pygame.sprite.Group.empty(Bullets)
 
 pygame.init()
 
@@ -38,3 +39,4 @@ all_sprites = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
 InvisibleWalls = pygame.sprite.Group()
+Bullets = pygame.sprite.Group()

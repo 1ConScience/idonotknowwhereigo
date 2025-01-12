@@ -87,11 +87,35 @@ class Bot(Personnage):
             case 5:
                 self.cancel_jump()
 
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        super().__init__()  
+        my_font = pygame.font.SysFont('Times New Roman', 15)
+        col = pygame.Color(0, 0, 0)
+        col.hsva = (random.randrange(0, 360), 100, 100, 100)
+        self.surf = my_font.render(str(random.randrange(0, 9)), False, col)
+        self.rect = self.surf.get_rect(center = (x, y-25))
+
 class Player(Personnage):
     def __init__(self):
         super().__init__()  
         self.surf = epsilon_img
         self.rect = self.surf.get_rect()
+
+        self.armed = False
+
+    def get_weapon(self):
+        weapon_font = pygame.font.SysFont('Times New Roman', 30)
+        weapon_surf = weapon_font.render("⌐", False, (0,255,255))
+        self.surf.blit(weapon_surf,(20,0))
+
+        self.armed = True
+
+    def shot(self):
+        if self.armed:
+            bullet = Bullet(self.pos.x, self.pos.y)
+            all_sprites.add(bullet)
+            Bullets.add(bullet)
 
     def check_collisions(self):
         super().check_collisions()  
@@ -114,6 +138,10 @@ class Player(Personnage):
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN :
+            self.shot()
+
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()

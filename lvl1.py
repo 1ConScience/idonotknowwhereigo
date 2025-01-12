@@ -23,6 +23,9 @@ def lvl1():
     spanw_txt = Texte("†",P1.spawn.x, P1.spawn.y,(255, 255, 255))
     all_sprites.add(spanw_txt)
 
+    weapon = Texte("⌐",200, 200,(0, 255, 255))
+    all_sprites.add(weapon)
+
     for i in range(13):
         bot = Bot("psi")
         all_sprites.add(bot)
@@ -36,6 +39,11 @@ def lvl1():
         for bot in enemies:
             bot.check_collisions()
             bot.action()
+
+        hit = pygame.sprite.collide_rect(P1, weapon)
+        if hit:
+            P1.get_weapon()
+            weapon.kill()
 
         screen.fill((0,0,0))
 
