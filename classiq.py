@@ -10,14 +10,14 @@ class Personnage(pygame.sprite.Sprite):
         self.acc = vec(0,0)
         self.jumping = False
 
-        self.DroiteGauche = 0
+        self.droite_gauche = 0
 
     def update(self):
         self.acc = vec(0,0.5)
                 
-        if self.DroiteGauche == -1:
+        if self.droite_gauche == -1:
             self.acc.x = -ACC
-        if self.DroiteGauche == 1:
+        if self.droite_gauche == 1:
             self.acc.x = ACC
                  
         self.acc.x += self.vel.x * FRIC
@@ -62,39 +62,67 @@ class Bot(Personnage):
                     self.pos.x = hits[0].rect.left -1
                     self.vel.x = 0
                     self.jumping = False
-                    self.DroiteGauche = -1
+                    self.droite_gauche = -1
         if self.vel.x < 0:        
             if hits:
                 if self.pos.x > hits[0].rect.left:               
                     self.pos.x = hits[0].rect.right +1
                     self.vel.x = 0
                     self.jumping = False
-                    self.DroiteGauche = 1
+                    self.droite_gauche = 1
 
     def action(self):
         status= random.randint(1, 5)
         match status:
             case 1:
-                self.DroiteGauche = 1
+                self.droite_gauche = 1
                 self.surf = psi_img 
             case 2:
-                self.DroiteGauche = -1
+                self.droite_gauche = -1
                 self.surf = pygame.transform.flip(psi_img, True, False)
             case 3:
-                self.DroiteGauche = 0
+                self.droite_gauche = 0
             case 4:
                 self.jump()
             case 5:
                 self.cancel_jump()
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self,x,y):
+    def __init__(self,x,y,bullets_direction):
         super().__init__()  
+
         my_font = pygame.font.SysFont('Times New Roman', 15)
         col = pygame.Color(0, 0, 0)
         col.hsva = (random.randrange(0, 360), 100, 100, 100)
+
         self.surf = my_font.render(str(random.randrange(0, 9)), False, col)
-        self.rect = self.surf.get_rect(center = (x, y-25))
+        self.rect = self.surf.get_rect()
+
+        self.direction = bullets_direction
+
+        y = y - 25
+        if self.direction == -1:
+            x = x - 15
+        if self.direction == 1: 
+            x = x + 15
+
+        self.pos = vec((x, y))
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+
+    def update(self):
+        self.acc = vec(0,0)#no gravity / old : 0,0.5
+                
+        if self.direction == -1:
+            self.acc.x = -ACC
+        if self.direction == 1:
+            self.acc.x = ACC
+                 
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc
+
+        self.rect.center = self.pos
 
 class Player(Personnage):
     def __init__(self):
@@ -103,6 +131,7 @@ class Player(Personnage):
         self.rect = self.surf.get_rect()
 
         self.armed = False
+        self.bullets_direction = 1
 
     def display_weapon(self):
         if self.armed:
@@ -116,7 +145,7 @@ class Player(Personnage):
 
     def shot(self):
         if self.armed:
-            bullet = Bullet(self.pos.x, self.pos.y)
+            bullet = Bullet(self.pos.x, self.pos.y, self.bullets_direction)
             all_sprites.add(bullet)
             Bullets.add(bullet)
 
@@ -132,11 +161,11 @@ class Player(Personnage):
             axis_pos = joysticks[0].get_axis(0)
 
             if axis_pos < -1 * deadzone:
-                self.DroiteGauche = -1
+                self.droite_gauche = -1
             elif axis_pos > deadzone:
-                self.DroiteGauche = 1
+                self.droite_gauche = 1
             else:
-                self.DroiteGauche = 0   
+                self.droite_gauche = 0   
 
         if event.type == QUIT:
             pygame.quit()
@@ -150,16 +179,16 @@ class Player(Personnage):
                 pygame.quit()
                 sys.exit()
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
-                self.DroiteGauche = -1
+                self.droite_gauche = -1
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                self.DroiteGauche = 1
+                self.droite_gauche = 1
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.jump()
         if event.type == pygame.KEYUP:   
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
-                self.DroiteGauche = 0
+                self.droite_gauche = 0
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                self.DroiteGauche = 0 
+                self.droite_gauche = 0 
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.cancel_jump()
 
@@ -170,12 +199,12 @@ class Player(Personnage):
             if  event.button == 0:
                 self.cancel_jump()
 
-        if self.DroiteGauche == -1:
-            self.display_weapon()
+        if self.droite_gauche == -1:
             self.surf = pygame.transform.flip(epsilon_img, True, False)
-        if self.DroiteGauche == 1:
+            self.bullets_direction = -1
+        if self.droite_gauche == 1:
             self.surf = epsilon_img
-            self.display_weapon()
+            self.bullets_direction = 1
 
     def respawn(self):
         self.rect = self.surf.get_rect()
@@ -186,7 +215,7 @@ class Player(Personnage):
         self.acc = vec(0,0)
         self.jumping = False
 
-        self.DroiteGauche = 0    
+        self.droite_gauche = 0    
  
 class Platform(pygame.sprite.Sprite):
     def __init__(self,size,pos):
