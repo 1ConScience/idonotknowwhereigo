@@ -4,34 +4,35 @@ def lvl1():
     P1 = Player()
     all_sprites.add(P1)
 
-    PT01 = Platform((500, 20),(0, 300))
+    bot = Bot("psi")
+    all_sprites.add(bot)
+    enemies.add(bot)
+
+    PT01 = Platform((100, 20),(0, 300))
     all_sprites.add(PT01)
     platforms.add(PT01)
 
     while 1:
+        P1.check_collisions()
+        bot.check_collisions()
 
-        #quand P1 entre en collision avec platforms
-        P1.update()
-
+        bot.action()
         for event in pygame.event.get():
-            P1.controls(event)
+            P1.controllers(event)
 
-        P1.joystick()
+        screen.fill((0,0,0))
 
-        #fond noir
-        screen.fill((255,255,255))
-
-        #ajust camera
         camera.x = P1.pos.x - WIDTH/2
         camera.y = P1.pos.y - HEIGHT/2
         
-        #deplacer les sprites 
         for entity in all_sprites:
-            entity.move()
+            entity.update()
             screen.blit(entity.surf, (entity.rect.x - camera.x, entity.rect.y - camera.y))
 
         if (P1.rect.y - camera.y) > HEIGHT:
-            P1.into_the_void()
+            P1.respawn()
+        if (bot.rect.y - camera.y) > HEIGHT:
+            bot.kill()
 
         pygame.display.update()
         FramePerSec.tick(FPS)

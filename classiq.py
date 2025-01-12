@@ -3,8 +3,6 @@ from head import *
 class Personnage(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.surf = image_droite
-        self.rect = self.surf.get_rect()
    
         self.spawn = vec((0,0))
         self.pos = vec((0,0))
@@ -15,7 +13,7 @@ class Personnage(pygame.sprite.Sprite):
         self.gauche = False
         self.droite = False
 
-    def move(self):
+    def update(self):
         self.acc = vec(0,0.5)
                 
         if self.gauche:
@@ -40,7 +38,7 @@ class Personnage(pygame.sprite.Sprite):
             if self.vel.y < -3:
                 self.vel.y = -3
  
-    def update(self):
+    def check_collisions(self):
         hits = pygame.sprite.spritecollide(self ,platforms, False)
         if self.vel.y > 0:        
             if hits:
@@ -49,23 +47,56 @@ class Personnage(pygame.sprite.Sprite):
                     self.vel.y = 0
                     self.jumping = False
 
-    def into_the_void(self):
+class Bot(Personnage):
+    def __init__(self, model):
+        super().__init__() 
+        if model == "psi":
+            self.surf = psi_img  
         self.rect = self.surf.get_rect()
-   
-        self.spawn = vec((0,0))
-        self.pos = vec((0,0))
-        self.vel = vec(0,0)
-        self.acc = vec(0,0)
-        self.jumping = False
 
-        self.gauche = False
-        self.droite = False
+    def action(self):
+        status= random.randint(1, 5)
+        match status:
+            case 1:
+                self.droite = True 
+                self.gauche = False 
+                self.surf = psi_img 
+            case 2:
+                self.gauche = True
+                self.droite = False
+                self.surf = pygame.transform.flip(psi_img, True, False)
+            case 3:
+                self.droite = False
+                self.gauche = False
+            case 4:
+                self.jump()
+            case 5:
+                self.cancel_jump()
 
 class Player(Personnage):
     def __init__(self):
         super().__init__()  
+        self.surf = epsilon_img
+        self.rect = self.surf.get_rect()
 
-    def controls(self,event):
+    def check_collisions(self):
+        super().check_collisions()  
+        hits = pygame.sprite.spritecollide(self ,enemies, False)      
+        if hits:
+            self.respawn()
+
+    def controllers(self,event):
+        if pygame.joystick.get_count()>0:
+            axis_pos = joysticks[0].get_axis(0)
+
+            if axis_pos < -1 * deadzone:
+                self.gauche = True
+            elif axis_pos > deadzone:
+                self.droite = True  
+            else:
+                self.gauche = False
+                self.droite = False     
+
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
@@ -103,28 +134,28 @@ class Player(Personnage):
                 self.cancel_jump()
 
         if self.gauche:
-            self.surf = image_gauche
+            self.surf = pygame.transform.flip(epsilon_img, True, False)
         if self.droite:
-            self.surf = image_droite
+            self.surf = epsilon_img
 
-    def joystick(self):
-        if pygame.joystick.get_count()>0:
-            axis_pos = joysticks[0].get_axis(0)
+    def respawn(self):
+        self.rect = self.surf.get_rect()
+   
+        self.spawn = vec((0,0))
+        self.pos = vec((0,0))
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+        self.jumping = False
 
-            if axis_pos < -1 * deadzone:
-                self.gauche = True
-            elif axis_pos > deadzone:
-                self.droite = True  
-            else:
-                self.gauche = False
-                self.droite = False          
+        self.gauche = False
+        self.droite = False     
  
 class Platform(pygame.sprite.Sprite):
     def __init__(self,size,pos):
         super().__init__()
         self.surf = pygame.Surface(size)
-        self.surf.fill((0,0,0))
+        self.surf.fill((255,255,255))
         self.rect = self.surf.get_rect(center = pos)
 
-    def move(self):
+    def update(self):
         pass
