@@ -15,7 +15,7 @@ class Personnage(pygame.sprite.Sprite):
     def setPosnSpawn(self,x,y):
         self.pos = vec((x,y))
         self.spawn = vec((x,y))
-        self.rect.midbottom = self.pos
+        self.rect.midbottom = vec((x,y))
 
     def update(self):
         self.acc = vec(0,0.5)
@@ -43,11 +43,11 @@ class Personnage(pygame.sprite.Sprite):
                 self.vel.y = -3
  
     def check_collisions(self):
-        hits = pygame.sprite.spritecollide(self ,platforms, False)
+        hits_platforms = pygame.sprite.spritecollide(self ,platforms, False)
         if self.vel.y > 0:        
-            if hits:
-                if self.pos.y < hits[0].rect.bottom:               
-                    self.pos.y = hits[0].rect.top +1
+            if hits_platforms:
+                if self.pos.y < hits_platforms[0].rect.bottom:               
+                    self.pos.y = hits_platforms[0].rect.top +1
                     self.vel.y = 0
                     self.jumping = False
 
@@ -60,26 +60,26 @@ class Bot(Personnage):
 
     def check_collisions(self):
         super().check_collisions()  
-        hits = pygame.sprite.spritecollide(self ,invisible_walls, False)      
+        hits_invisible_walls = pygame.sprite.spritecollide(self ,invisible_walls, False)      
         if self.vel.x > 0:        
-            if hits:
-                if self.pos.x < hits[0].rect.right:               
-                    self.pos.x = hits[0].rect.left -1
+            if hits_invisible_walls:
+                if self.pos.x < hits_invisible_walls[0].rect.right:               
+                    self.pos.x = hits_invisible_walls[0].rect.left -1
                     self.vel.x = 0
                     self.jumping = False
                     self.droite_gauche = -1
         if self.vel.x < 0:        
-            if hits:
-                if self.pos.x > hits[0].rect.left:               
-                    self.pos.x = hits[0].rect.right +1
+            if hits_invisible_walls:
+                if self.pos.x > hits_invisible_walls[0].rect.left:               
+                    self.pos.x = hits_invisible_walls[0].rect.right +1
                     self.vel.x = 0
                     self.jumping = False
                     self.droite_gauche = 1
 
-        hits = pygame.sprite.spritecollide(self ,bullets, False)      
-        if hits:
+        hits_bullets = pygame.sprite.spritecollide(self ,bullets, False)      
+        if hits_bullets:
             self.kill()
-            hits[0].kill()
+            hits_bullets[0].kill()
             pass
 
     def action(self):
@@ -135,6 +135,7 @@ class Player(Personnage):
 
         self.armed = False
         self.bullets_direction = 1
+        self.shooting = False
 
     def display_weapon(self):
         if self.armed:
@@ -147,7 +148,7 @@ class Player(Personnage):
         self.display_weapon()
 
     def shot(self):
-        if self.armed:
+        if self.armed and self.shooting:
             bullet = Bullet(self.pos.x, self.pos.y, self.bullets_direction)
             all_sprites.add(bullet)
             bullets.add(bullet)
@@ -156,8 +157,8 @@ class Player(Personnage):
 
     def check_collisions(self):
         super().check_collisions()  
-        hits = pygame.sprite.spritecollide(self ,enemies, False)      
-        if hits:
+        hits_enemies = pygame.sprite.spritecollide(self ,enemies, False)      
+        if hits_enemies:
             self.respawn()
 
     def controllers(self,event):
@@ -176,7 +177,9 @@ class Player(Personnage):
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN :
-            self.shot()
+            self.shooting = True
+        if event.type == pygame.MOUSEBUTTONUP :
+            self.shooting = False
 
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_ESCAPE:
@@ -211,14 +214,15 @@ class Player(Personnage):
             self.bullets_direction = 1
 
     def respawn(self):
-        self.pos = self.spawn
+        self.rect = self.surf.get_rect()
+   
+        self.spawn = vec((0, 0))
+        self.pos = vec((0, 0))
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.jumping = False
 
-        self.droite_gauche = 0    
-        
-        self.rect.midbottom = self.pos
+        self.droite_gauche = 0
  
 class Platform(pygame.sprite.Sprite):
     def __init__(self,size,pos):

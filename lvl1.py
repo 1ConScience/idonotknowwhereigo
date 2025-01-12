@@ -40,6 +40,7 @@ def lvl1():
         for event in pygame.event.get():
             P1.controllers(event)
         P1.check_collisions()
+        P1.shot()
 
         for bot in enemies:
             bot.check_collisions()
