@@ -45,13 +45,13 @@ def lvl1():
             bot.check_collisions()
             bot.action()
 
-        hit = pygame.sprite.collide_rect(P1, weapon)
-        if hit:
-            P1.get_weapon()
-            weapon.kill()
+        if not P1.armed:
+            hit = pygame.sprite.collide_rect(P1, weapon)
+            if hit:
+                P1.get_weapon()
+                weapon.kill()
 
-        screen.fill((0,0,0))
-        screen.blit(background, (0,0))
+        screen.fill((0,0,72))
 
         camera.x = P1.pos.x - WIDTH/2
         camera.y = P1.pos.y - HEIGHT/2
