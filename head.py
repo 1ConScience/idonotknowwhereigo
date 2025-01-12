@@ -7,8 +7,8 @@ def nettoyage():
     pygame.sprite.Group.empty(all_sprites)
     pygame.sprite.Group.empty(platforms)
     pygame.sprite.Group.empty(enemies)
-    pygame.sprite.Group.empty(InvisibleWalls)
-    pygame.sprite.Group.empty(Bullets)
+    pygame.sprite.Group.empty(invisible_walls)
+    pygame.sprite.Group.empty(bullets)
 
 pygame.init()
 
@@ -20,7 +20,7 @@ vec = pygame.math.Vector2 #2 for two dimensional
 WIDTH = 1280
 HEIGHT = 720
 ACC = 0.5
-FRIC = -0.05#-0.12
+FRIC = -0.05#-0.12 You can tweak the value of the FRIC variable to adjust the movement. The higher the value, the faster the player will stop moving.
 FPS = 60
 
 deadzone = 0.3#for joystick
@@ -38,5 +38,5 @@ phi_img = pygame.image.load("assets/phi.png").convert_alpha()
 all_sprites = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
-InvisibleWalls = pygame.sprite.Group()
-Bullets = pygame.sprite.Group()
+invisible_walls = pygame.sprite.Group()
+bullets = pygame.sprite.Group()

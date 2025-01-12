@@ -55,7 +55,7 @@ class Bot(Personnage):
 
     def check_collisions(self):
         super().check_collisions()  
-        hits = pygame.sprite.spritecollide(self ,InvisibleWalls, False)      
+        hits = pygame.sprite.spritecollide(self ,invisible_walls, False)      
         if self.vel.x > 0:        
             if hits:
                 if self.pos.x < hits[0].rect.right:               
@@ -70,6 +70,12 @@ class Bot(Personnage):
                     self.vel.x = 0
                     self.jumping = False
                     self.droite_gauche = 1
+
+        hits = pygame.sprite.spritecollide(self ,bullets, False)      
+        if hits:
+            self.kill()
+            hits[0].kill()
+            pass
 
     def action(self):
         status= random.randint(1, 5)
@@ -101,26 +107,18 @@ class Bullet(pygame.sprite.Sprite):
         self.direction = bullets_direction
 
         y = y - 25
-        if self.direction == -1:
+        if self.direction == -1: 
             x = x - 15
         if self.direction == 1: 
             x = x + 15
 
         self.pos = vec((x, y))
-        self.vel = vec(0,0)
-        self.acc = vec(0,0)
 
     def update(self):
-        self.acc = vec(0,0)#no gravity / old : 0,0.5
-                
         if self.direction == -1:
-            self.acc.x = -ACC
+            self.pos.x += -20
         if self.direction == 1:
-            self.acc.x = ACC
-                 
-        self.acc.x += self.vel.x * FRIC
-        self.vel += self.acc
-        self.pos += self.vel + 0.5 * self.acc
+            self.pos.x += 20
 
         self.rect.center = self.pos
 
@@ -147,14 +145,13 @@ class Player(Personnage):
         if self.armed:
             bullet = Bullet(self.pos.x, self.pos.y, self.bullets_direction)
             all_sprites.add(bullet)
-            Bullets.add(bullet)
+            bullets.add(bullet)
 
     def check_collisions(self):
         super().check_collisions()  
         hits = pygame.sprite.spritecollide(self ,enemies, False)      
         if hits:
-            #self.respawn()
-            pass
+            self.respawn()
 
     def controllers(self,event):
         if pygame.joystick.get_count()>0:

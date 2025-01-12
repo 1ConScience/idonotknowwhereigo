@@ -11,11 +11,11 @@ def lvl1():
 
     wall = InvisibleWall((20, 240),(510, 170))
     all_sprites.add(wall)
-    InvisibleWalls.add(wall)
+    invisible_walls.add(wall)
 
     wall2 = InvisibleWall((20, 240),(-510, 170))
     all_sprites.add(wall2)
-    InvisibleWalls.add(wall2)
+    invisible_walls.add(wall2)
 
     P1 = Player()
     all_sprites.add(P1)
@@ -60,6 +60,10 @@ def lvl1():
         for bot in enemies: 
             if (bot.rect.y - camera.y) > HEIGHT:
                 bot.kill()
+
+        for bullet in bullets: 
+            if (bot.rect.x - camera.x) > WIDTH or (bot.rect.x - camera.x) < 0:
+                bullet.kill()
 
         pygame.display.update()
         FramePerSec.tick(FPS)
