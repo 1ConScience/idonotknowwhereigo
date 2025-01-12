@@ -30,7 +30,7 @@ def lvl2():
     P1 = Player()
     all_sprites.add(P1)
 
-    safe_zone = Platform((1000, 20),(-1000, 150))
+    safe_zone = Platform((500, 20),(-750, 150))
     all_sprites.add(safe_zone)
     platforms.add(safe_zone)
 
@@ -40,8 +40,8 @@ def lvl2():
     weapon = Texte("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
-    for i in range(4):
-        generateHellZone(1200*i, 150*i)
+    for i in range(3):
+        generateHellZone(1200*i, 150*i-150)
 
     while 1:
         for event in pygame.event.get():
