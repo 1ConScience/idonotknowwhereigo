@@ -127,7 +127,11 @@ class Bullet(pygame.sprite.Sprite):
 class Player(Personnage):
     def __init__(self):
         super().__init__()  
-        self.surf = epsilon_img
+
+        self.surf_droite = epsilon_img
+        self.surf_gauche = pygame.transform.flip(epsilon_img, True, False)
+
+        self.surf = self.surf_droite
         self.rect = self.surf.get_rect()
 
         self.armed = False
@@ -136,8 +140,12 @@ class Player(Personnage):
     def display_weapon(self):
         if self.armed:
             weapon_font = pygame.font.SysFont('Times New Roman', 30)
-            weapon_surf = weapon_font.render("⌐", False, (0,255,255))
-            self.surf.blit(weapon_surf,(20,0))
+            weapon_surf_droite = weapon_font.render("⌐", False, (0,255,255))
+            self.surf_droite.blit(weapon_surf_droite,(12,0))
+
+            weapon_surf_gauche = weapon_font.render("¬", False, (0,255,255))
+            self.surf_gauche.blit(weapon_surf_gauche,(0,0))
+            
 
     def get_weapon(self):
         self.armed = True
@@ -179,33 +187,39 @@ class Player(Personnage):
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
+
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
                 self.droite_gauche = -1
+                self.surf = self.surf_gauche
+                self.bullets_direction = -1
+
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 self.droite_gauche = 1
+                self.surf = self.surf_droite
+                self.bullets_direction = 1
+
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.jump()
+
         if event.type == pygame.KEYUP:   
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
                 self.droite_gauche = 0
+
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 self.droite_gauche = 0 
+
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.cancel_jump()
 
         if event.type == pygame.JOYBUTTONDOWN:    
             if  event.button == 0:
                 self.jump()
+
         if event.type == pygame.JOYBUTTONUP:    
             if  event.button == 0:
                 self.cancel_jump()
 
-        if self.droite_gauche == -1:
-            self.surf = pygame.transform.flip(epsilon_img, True, False)
-            self.bullets_direction = -1
-        if self.droite_gauche == 1:
-            self.surf = epsilon_img
-            self.bullets_direction = 1
+        self.display_weapon()
 
     def respawn(self):
         self.rect = self.surf.get_rect()
