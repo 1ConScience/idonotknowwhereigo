@@ -1,6 +1,24 @@
 from classiq import *
 
-def lvl1():
+def generateHellZone(x_offet, y_offset):
+    hell_zone = Platform((1000, 20),(1200+x_offet, 300+y_offset))
+    all_sprites.add(hell_zone)
+    platforms.add(hell_zone)
+
+    wall = InvisibleWall((510+1200+x_offet, 170+y_offset))
+    all_sprites.add(wall)
+    invisible_walls.add(wall)
+
+    wall2 = InvisibleWall((-510+1200+x_offet, 170+y_offset))
+    all_sprites.add(wall2)
+    invisible_walls.add(wall2)
+
+    for i in range(21):
+        bot = Bot("psi",vec((1200+x_offet,0+y_offset)))
+        all_sprites.add(bot)
+        enemies.add(bot)
+
+def lvl2():
 
     insignifiant_txt = Texte("Tu n'es pas si insignifiant Epsilon...",0, 100,(255, 255, 255))
     all_sprites.add(insignifiant_txt)
@@ -22,22 +40,8 @@ def lvl1():
     weapon = Texte("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
-    hell_zone = Platform((1000, 20),(1200, 300))
-    all_sprites.add(hell_zone)
-    platforms.add(hell_zone)
-
-    wall = InvisibleWall((510+1200, 170))
-    all_sprites.add(wall)
-    invisible_walls.add(wall)
-
-    wall2 = InvisibleWall((-510+1200, 170))
-    all_sprites.add(wall2)
-    invisible_walls.add(wall2)
-
-    for i in range(13):
-        bot = Bot("psi",vec((1200,0)))
-        all_sprites.add(bot)
-        enemies.add(bot)
+    for i in range(4):
+        generateHellZone(1200*i, 150*i)
 
     while 1:
         for event in pygame.event.get():
@@ -68,8 +72,7 @@ def lvl1():
 
         for bot in enemies: 
             if (bot.rect.y - camera.y) > HEIGHT:
-                #bot.kill()
-                pass
+                bot.kill()
 
         for bullet in bullets: 
             if (bullet.rect.x - camera.x) > WIDTH or (bullet.rect.x - camera.x) < 0:
