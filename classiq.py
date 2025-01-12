@@ -12,6 +12,11 @@ class Personnage(pygame.sprite.Sprite):
 
         self.droite_gauche = 0
 
+    def setPosnSpawn(self,x,y):
+        self.pos = vec((x,y))
+        self.spawn = vec((x,y))
+        self.rect.midbottom = self.pos
+
     def update(self):
         self.acc = vec(0,0.5)
                 
@@ -204,15 +209,14 @@ class Player(Personnage):
             self.bullets_direction = 1
 
     def respawn(self):
-        self.rect = self.surf.get_rect()
-   
-        self.spawn = vec((0,0))
-        self.pos = vec((0,0))
+        self.pos = self.spawn
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.jumping = False
 
         self.droite_gauche = 0    
+        
+        self.rect.midbottom = self.pos
  
 class Platform(pygame.sprite.Sprite):
     def __init__(self,size,pos):

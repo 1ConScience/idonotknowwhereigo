@@ -19,11 +19,16 @@ def lvl1():
 
     P1 = Player()
     all_sprites.add(P1)
+    P1.setPosnSpawn(-1000,0)
+
+    safe_zone = Platform((1000, 20),(-1000, 150))
+    all_sprites.add(safe_zone)
+    platforms.add(safe_zone)
 
     spanw_txt = Texte("†",P1.spawn.x, P1.spawn.y,(255, 255, 255))
     all_sprites.add(spanw_txt)
 
-    weapon = Texte("⌐",200, 200,(0, 255, 255))
+    weapon = Texte("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
     for i in range(13):
