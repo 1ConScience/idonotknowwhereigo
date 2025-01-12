@@ -27,13 +27,15 @@ deadzone = 0.3#for joystick
  
 FramePerSec = pygame.time.Clock()
  
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT),pygame.NOFRAME, 32)
 
 pygame.display.set_caption("Epsilon")
 
 epsilon_img = pygame.image.load("assets/epsilon.png").convert_alpha()
 psi_img = pygame.image.load("assets/psi.png").convert_alpha()
 phi_img = pygame.image.load("assets/phi.png").convert_alpha()
+
+background = pygame.image.load("assets/background.jpg").convert()
 
 shot_sound = pygame.mixer.Sound("assets/laser-gun-sound.mp3")
 

@@ -9,11 +9,11 @@ def lvl1():
     all_sprites.add(PT01)
     platforms.add(PT01)
 
-    wall = InvisibleWall((20, 240),(510, 170))
+    wall = InvisibleWall((510, 170))
     all_sprites.add(wall)
     invisible_walls.add(wall)
 
-    wall2 = InvisibleWall((20, 240),(-510, 170))
+    wall2 = InvisibleWall((-510, 170))
     all_sprites.add(wall2)
     invisible_walls.add(wall2)
 
@@ -51,6 +51,7 @@ def lvl1():
             weapon.kill()
 
         screen.fill((0,0,0))
+        screen.blit(background, (0,0))
 
         camera.x = P1.pos.x - WIDTH/2
         camera.y = P1.pos.y - HEIGHT/2

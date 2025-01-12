@@ -231,9 +231,10 @@ class Platform(pygame.sprite.Sprite):
         pass
  
 class InvisibleWall(pygame.sprite.Sprite):
-    def __init__(self,size,pos):
+    def __init__(self,pos):
         super().__init__()
-        self.surf = pygame.Surface(size)
+        image = pygame.Surface([20,240], pygame.SRCALPHA, 32)
+        self.surf = image.convert_alpha()
         self.rect = self.surf.get_rect(center = pos)
 
     def update(self):
