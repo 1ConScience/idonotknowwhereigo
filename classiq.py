@@ -104,12 +104,15 @@ class Player(Personnage):
 
         self.armed = False
 
-    def get_weapon(self):
-        weapon_font = pygame.font.SysFont('Times New Roman', 30)
-        weapon_surf = weapon_font.render("⌐", False, (0,255,255))
-        self.surf.blit(weapon_surf,(20,0))
+    def display_weapon(self):
+        if self.armed:
+            weapon_font = pygame.font.SysFont('Times New Roman', 30)
+            weapon_surf = weapon_font.render("⌐", False, (0,255,255))
+            self.surf.blit(weapon_surf,(20,0))
 
+    def get_weapon(self):
         self.armed = True
+        self.display_weapon()
 
     def shot(self):
         if self.armed:
@@ -168,9 +171,11 @@ class Player(Personnage):
                 self.cancel_jump()
 
         if self.DroiteGauche == -1:
+            self.display_weapon()
             self.surf = pygame.transform.flip(epsilon_img, True, False)
         if self.DroiteGauche == 1:
             self.surf = epsilon_img
+            self.display_weapon()
 
     def respawn(self):
         self.rect = self.surf.get_rect()
