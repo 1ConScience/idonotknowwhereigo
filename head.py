@@ -7,6 +7,7 @@ def nettoyage():
     pygame.sprite.Group.empty(all_sprites)
     pygame.sprite.Group.empty(platforms)
     pygame.sprite.Group.empty(enemies)
+    pygame.sprite.Group.empty(InvisibleWalls)
 
 pygame.init()
 
@@ -36,3 +37,4 @@ phi_img = pygame.image.load("assets/phi.png").convert_alpha()
 all_sprites = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
+InvisibleWalls = pygame.sprite.Group()

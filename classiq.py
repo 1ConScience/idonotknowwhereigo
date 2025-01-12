@@ -10,15 +10,14 @@ class Personnage(pygame.sprite.Sprite):
         self.acc = vec(0,0)
         self.jumping = False
 
-        self.gauche = False
-        self.droite = False
+        self.DroiteGauche = 0
 
     def update(self):
         self.acc = vec(0,0.5)
                 
-        if self.gauche:
+        if self.DroiteGauche == -1:
             self.acc.x = -ACC
-        if self.droite:
+        if self.DroiteGauche == 1:
             self.acc.x = ACC
                  
         self.acc.x += self.vel.x * FRIC
@@ -30,8 +29,8 @@ class Personnage(pygame.sprite.Sprite):
     def jump(self): 
         hits = pygame.sprite.spritecollide(self, platforms, False)
         if hits and not self.jumping:
-           self.jumping = True
-           self.vel.y = -15
+            self.jumping = True
+            self.vel.y = -15
  
     def cancel_jump(self):
         if self.jumping:
@@ -54,20 +53,35 @@ class Bot(Personnage):
             self.surf = psi_img  
         self.rect = self.surf.get_rect()
 
+    def check_collisions(self):
+        super().check_collisions()  
+        hits = pygame.sprite.spritecollide(self ,InvisibleWalls, False)      
+        if self.vel.x > 0:        
+            if hits:
+                if self.pos.x < hits[0].rect.right:               
+                    self.pos.x = hits[0].rect.left -1
+                    self.vel.x = 0
+                    self.jumping = False
+                    self.DroiteGauche = -1
+        if self.vel.x < 0:        
+            if hits:
+                if self.pos.x > hits[0].rect.left:               
+                    self.pos.x = hits[0].rect.right +1
+                    self.vel.x = 0
+                    self.jumping = False
+                    self.DroiteGauche = 1
+
     def action(self):
         status= random.randint(1, 5)
         match status:
             case 1:
-                self.droite = True 
-                self.gauche = False 
+                self.DroiteGauche = 1
                 self.surf = psi_img 
             case 2:
-                self.gauche = True
-                self.droite = False
+                self.DroiteGauche = -1
                 self.surf = pygame.transform.flip(psi_img, True, False)
             case 3:
-                self.droite = False
-                self.gauche = False
+                self.DroiteGauche = 0
             case 4:
                 self.jump()
             case 5:
@@ -83,19 +97,19 @@ class Player(Personnage):
         super().check_collisions()  
         hits = pygame.sprite.spritecollide(self ,enemies, False)      
         if hits:
-            self.respawn()
+            #self.respawn()
+            pass
 
     def controllers(self,event):
         if pygame.joystick.get_count()>0:
             axis_pos = joysticks[0].get_axis(0)
 
             if axis_pos < -1 * deadzone:
-                self.gauche = True
+                self.DroiteGauche = -1
             elif axis_pos > deadzone:
-                self.droite = True  
+                self.DroiteGauche = 1
             else:
-                self.gauche = False
-                self.droite = False     
+                self.DroiteGauche = 0   
 
         if event.type == QUIT:
             pygame.quit()
@@ -105,37 +119,29 @@ class Player(Personnage):
                 pygame.quit()
                 sys.exit()
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
-                self.gauche = True
+                self.DroiteGauche = -1
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                self.droite = True  
+                self.DroiteGauche = 1
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.jump()
         if event.type == pygame.KEYUP:   
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
-                self.gauche = False
+                self.DroiteGauche = 0
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                self.droite = False 
+                self.DroiteGauche = 0 
             if event.key == pygame.K_SPACE or event.key == pygame.K_z or event.key == pygame.K_UP:
                 self.cancel_jump()
 
-        if event.type == pygame.JOYBUTTONDOWN:      
-            if  event.button == 4:
-                self.gauche = True
-            if  event.button == 5:
-                self.droite = True  
+        if event.type == pygame.JOYBUTTONDOWN:    
             if  event.button == 0:
                 self.jump()
-        if event.type == pygame.JOYBUTTONUP:      
-            if  event.button == 4:
-                self.gauche = False
-            if  event.button == 5:
-                self.droite = False 
+        if event.type == pygame.JOYBUTTONUP:    
             if  event.button == 0:
                 self.cancel_jump()
 
-        if self.gauche:
+        if self.DroiteGauche == -1:
             self.surf = pygame.transform.flip(epsilon_img, True, False)
-        if self.droite:
+        if self.DroiteGauche == 1:
             self.surf = epsilon_img
 
     def respawn(self):
@@ -147,8 +153,7 @@ class Player(Personnage):
         self.acc = vec(0,0)
         self.jumping = False
 
-        self.gauche = False
-        self.droite = False     
+        self.DroiteGauche = 0    
  
 class Platform(pygame.sprite.Sprite):
     def __init__(self,size,pos):
@@ -158,4 +163,22 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center = pos)
 
     def update(self):
+        pass
+ 
+class InvisibleWall(pygame.sprite.Sprite):
+    def __init__(self,size,pos):
+        super().__init__()
+        self.surf = pygame.Surface(size)
+        self.rect = self.surf.get_rect(center = pos)
+
+    def update(self):
+        pass
+    
+class Texte(pygame.sprite.Sprite):
+    def __init__(self,txt,x,y,color):
+        super().__init__()
+        my_font = pygame.font.SysFont('Times New Roman', 30)
+        self.surf = my_font.render(txt, False, color)
+        self.rect = self.surf.get_rect(center = (x, y))
+    def move(self):
         pass
