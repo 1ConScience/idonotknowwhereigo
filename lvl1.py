@@ -35,7 +35,7 @@ def lvl1():
     invisible_walls.add(wall2)
 
     for i in range(13):
-        bot = Bot("psi")
+        bot = Bot("psi",vec((1200,0)))
         all_sprites.add(bot)
         enemies.add(bot)
 

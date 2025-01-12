@@ -47,11 +47,13 @@ class Personnage(pygame.sprite.Sprite):
                     self.jumping = False
 
 class Bot(Personnage):
-    def __init__(self, model):
+    def __init__(self, model, pos):
         super().__init__() 
         if model == "psi":
             self.surf = psi_img  
         self.rect = self.surf.get_rect()
+
+        self.pos = pos
 
     def check_collisions(self):
         super().check_collisions()  
