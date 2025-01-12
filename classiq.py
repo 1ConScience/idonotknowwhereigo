@@ -152,6 +152,8 @@ class Player(Personnage):
             all_sprites.add(bullet)
             bullets.add(bullet)
 
+            pygame.mixer.Sound.play(shot_sound)
+
     def check_collisions(self):
         super().check_collisions()  
         hits = pygame.sprite.spritecollide(self ,enemies, False)      

@@ -35,6 +35,8 @@ epsilon_img = pygame.image.load("assets/epsilon.png").convert_alpha()
 psi_img = pygame.image.load("assets/psi.png").convert_alpha()
 phi_img = pygame.image.load("assets/phi.png").convert_alpha()
 
+shot_sound = pygame.mixer.Sound("assets/laser-gun-sound.mp3")
+
 all_sprites = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
