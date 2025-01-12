@@ -67,7 +67,7 @@ def lvl1():
                 bot.kill()
 
         for bullet in bullets: 
-            if (bot.rect.x - camera.x) > WIDTH or (bot.rect.x - camera.x) < 0:
+            if (bullet.rect.x - camera.x) > WIDTH or (bullet.rect.x - camera.x) < 0:
                 bullet.kill()
 
         pygame.display.update()
