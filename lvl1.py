@@ -68,8 +68,7 @@ def lvl1():
 
         for bot in enemies: 
             if (bot.rect.y - camera.y) > HEIGHT:
-                #bot.kill()
-                pass
+                bot.kill()
 
         for bullet in bullets: 
             if (bullet.rect.x - camera.x) > WIDTH or (bullet.rect.x - camera.x) < 0:
