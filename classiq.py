@@ -12,11 +12,6 @@ class Personnage(pygame.sprite.Sprite):
 
         self.droite_gauche = 0
 
-    def setPosnSpawn(self,x,y):
-        self.pos = vec((x,y))
-        self.spawn = vec((x,y))
-        self.rect.midbottom = vec((x,y))
-
     def update(self):
         self.acc = vec(0,0.5)
                 
@@ -135,7 +130,6 @@ class Player(Personnage):
 
         self.armed = False
         self.bullets_direction = 1
-        self.shooting = False
 
     def display_weapon(self):
         if self.armed:
@@ -148,7 +142,7 @@ class Player(Personnage):
         self.display_weapon()
 
     def shot(self):
-        if self.armed and self.shooting:
+        if self.armed:
             bullet = Bullet(self.pos.x, self.pos.y, self.bullets_direction)
             all_sprites.add(bullet)
             bullets.add(bullet)
@@ -177,9 +171,7 @@ class Player(Personnage):
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN :
-            self.shooting = True
-        if event.type == pygame.MOUSEBUTTONUP :
-            self.shooting = False
+            self.shot()
 
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_ESCAPE:

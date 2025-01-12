@@ -9,17 +9,8 @@ def lvl1():
     all_sprites.add(PT01)
     platforms.add(PT01)
 
-    wall = InvisibleWall((510, 170))
-    all_sprites.add(wall)
-    invisible_walls.add(wall)
-
-    wall2 = InvisibleWall((-510, 170))
-    all_sprites.add(wall2)
-    invisible_walls.add(wall2)
-
     P1 = Player()
     all_sprites.add(P1)
-    P1.setPosnSpawn(-1000,0)
 
     safe_zone = Platform((1000, 20),(-1000, 150))
     all_sprites.add(safe_zone)
@@ -31,6 +22,18 @@ def lvl1():
     weapon = Texte("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
+    hell_zone = Platform((1000, 20),(1200, 300))
+    all_sprites.add(hell_zone)
+    platforms.add(hell_zone)
+
+    wall = InvisibleWall((510+1200, 170))
+    all_sprites.add(wall)
+    invisible_walls.add(wall)
+
+    wall2 = InvisibleWall((-510+1200, 170))
+    all_sprites.add(wall2)
+    invisible_walls.add(wall2)
+
     for i in range(13):
         bot = Bot("psi")
         all_sprites.add(bot)
@@ -40,7 +43,6 @@ def lvl1():
         for event in pygame.event.get():
             P1.controllers(event)
         P1.check_collisions()
-        P1.shot()
 
         for bot in enemies:
             bot.check_collisions()
