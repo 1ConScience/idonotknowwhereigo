@@ -1,5 +1,5 @@
 from level_blue_basic import *
-from level_blocks import *
+from level_labyrinth import *
 
-level_blocks()
+level_labyrinth()
 nettoyage()
