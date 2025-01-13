@@ -44,7 +44,7 @@ def level_blue_basic():
     weapon = Text("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
-    for i in range(3):
+    for i in range(1):
         generateHellZone(1200*i, 150*i-150)
 
     while 1:
