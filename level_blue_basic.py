@@ -1,4 +1,8 @@
-from classiq import *
+from Class.Bot import *
+from Class.Bullet import *
+from Class.Platform_Wall import *
+from Class.Player import *
+from Class.Text import *
 
 def generateHellZone(x_offet, y_offset):
     hell_zone = Platform((1000, 20),(1200+x_offet, 300+y_offset))
@@ -18,9 +22,9 @@ def generateHellZone(x_offet, y_offset):
         all_sprites.add(bot)
         enemies.add(bot)
 
-def lvl2():
+def level_blue_basic():
 
-    insignifiant_txt = Texte("Tu n'es pas si insignifiant Epsilon...",0, 100,(255, 255, 255))
+    insignifiant_txt = Text("Tu n'es pas si insignifiant Epsilon...",0, 100,(255, 255, 255))
     all_sprites.add(insignifiant_txt)
 
     PT01 = Platform((1000, 20),(0, 300))
@@ -34,10 +38,10 @@ def lvl2():
     all_sprites.add(safe_zone)
     platforms.add(safe_zone)
 
-    spanw_txt = Texte("†",P1.spawn.x, P1.spawn.y,(255, 255, 255))
+    spanw_txt = Text("†",P1.spawn.x, P1.spawn.y,(255, 255, 255))
     all_sprites.add(spanw_txt)
 
-    weapon = Texte("⌐",-700, 100,(0, 255, 255))
+    weapon = Text("⌐",-700, 100,(0, 255, 255))
     all_sprites.add(weapon)
 
     for i in range(3):

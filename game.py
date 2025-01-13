@@ -1,5 +1,4 @@
-from lvl1 import *
-from lvl2 import *
+from level_blue_basic import *
 
-lvl2()
+level_blue_basic()
 nettoyage()
