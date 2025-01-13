@@ -67,8 +67,8 @@ def level_blue_basic_camera_test():
 
         screen.fill((0,0,72))
 
-        camera.x = P1.pos.x - WIDTH/2
-        camera.y = P1.pos.y - HEIGHT/2
+        camera.x = P1.pos.x*P1.zoom - WIDTH/2
+        camera.y = P1.pos.y*P1.zoom - HEIGHT/2
         
         for entity in all_sprites:
             entity.update()
