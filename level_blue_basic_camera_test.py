@@ -77,16 +77,16 @@ def level_blue_basic_camera_test():
             
             screen.blit(surf_entity_scaled, (entity.rect.x*P1.zoom - camera.x, entity.rect.y*P1.zoom - camera.y))
 
-        if (P1.rect.y - camera.y) > HEIGHT:
+        if (P1.rect.y*P1.zoom - camera.y) > HEIGHT:
             P1.respawn()
 
         for bot in enemies: 
-            if (bot.rect.y - camera.y) > HEIGHT:
+            if (bot.rect.y*P1.zoom - camera.y) > HEIGHT:
                 #bot.kill()
                 pass
 
         for bullet in bullets: 
-            if (bullet.rect.x - camera.x) > WIDTH or (bullet.rect.x - camera.x) < 0:
+            if (bullet.rect.x*P1.zoom - camera.x) > WIDTH or (bullet.rect.x*P1.zoom - camera.x) < 0:
                 bullet.kill()
 
         pygame.display.update()
