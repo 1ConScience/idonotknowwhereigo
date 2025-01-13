@@ -27,6 +27,9 @@ def level_blue_basic_camera_test():
     insignifiant_txt = Text("Tu n'es pas si insignifiant Epsilon...",0, 100,(255, 255, 255))
     all_sprites.add(insignifiant_txt)
 
+    butterfly_txt = ButterflyText(1900, -50,(255, 255, 255))
+    all_sprites.add(butterfly_txt)
+
     PT01 = Platform((1000, 20),(0, 300))
     all_sprites.add(PT01)
     platforms.add(PT01)
