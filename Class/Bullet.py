@@ -8,7 +8,7 @@ class Bullet(pygame.sprite.Sprite):
         col = pygame.Color(0, 0, 0)
         col.hsva = (random.randrange(0, 360), 100, 100, 100)
 
-        self.surf = my_font.render(str(random.randrange(0, 9)), False, col)
+        self.surf = my_font.render(str(random.randrange(0, 9)), True, col)
         self.rect = self.surf.get_rect()
 
         self.direction = bullets_direction
