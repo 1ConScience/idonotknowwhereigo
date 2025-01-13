@@ -37,7 +37,7 @@ def level_blue_basic_camera_test():
     P1 = Player()
     all_sprites.add(P1)
 
-    safe_zone = Platform((500, 20),(-750, 150),(0, 0, 0))
+    safe_zone = Platform((500, 20),(-750, 150),(100, 100, 100))
     all_sprites.add(safe_zone)
     platforms.add(safe_zone)
 
@@ -72,7 +72,10 @@ def level_blue_basic_camera_test():
         
         for entity in all_sprites:
             entity.update()
-            screen.blit(entity.surf, (entity.rect.x - camera.x, entity.rect.y - camera.y))
+
+            surf_entity_scaled = pygame.transform.scale(entity.surf, (int(entity.rect.width*P1.zoom), int(entity.rect.height*P1.zoom)))
+            
+            screen.blit(surf_entity_scaled, (entity.rect.x*P1.zoom - camera.x, entity.rect.y*P1.zoom - camera.y))
 
         if (P1.rect.y - camera.y) > HEIGHT:
             P1.respawn()

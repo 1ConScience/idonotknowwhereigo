@@ -63,11 +63,9 @@ class Player(Character):
             if event.button == 1:
                 self.shot()
             if event.button == 4:
-                self.zoom += 0.1
-                print(self.zoom)
+                self.zoom += 0.01
             elif event.button == 5:
-                self.zoom -= 0.1
-                print(self.zoom)
+                self.zoom -= 0.01
 
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_ESCAPE:
