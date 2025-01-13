@@ -190,8 +190,13 @@ def gen_labyrinthLOLPRISON(x,y):
 
 def gen_labyrinth(x,y):
 
-    gen_mur_horizontal(x,y)
-
+    gen_mur_horizontal( x,                      y)
+    gen_coin_hautdroite(x+180,                  y-50) 
+    gen_mur_vertical(   x+180-50,               y-50+180)
+    gen_coin_basgauche( x+180-50-50,            y-50+180+180)
+    gen_mur_horizontal( x+180-50-50+180,        y-50+180+180-50)
+    gen_coin_basdroite( x+180-50-50+180+180,    y-50+180+180-50+50)
+    gen_mur_vertical(   x+180-50-50+180+180-50, y-50+180+180-50+50-180)
 
 
 

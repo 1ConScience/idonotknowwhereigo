@@ -74,16 +74,10 @@ class Character(pygame.sprite.Sprite):
         hits_blocks_vertical_col = pygame.sprite.spritecollide(self ,blocks_vertical_col, False)
         if self.vel.x > 0:        
             if hits_blocks_vertical_col:
-                if self.pos.x < hits_blocks_vertical_col[0].rect.right:               
-                    self.pos.x = hits_blocks_vertical_col[0].rect.left -1
+                if self.rect.right < hits_blocks_vertical_col[0].rect.right:    
                     self.vel.x = 0
-                    self.jumping = False
-                    self.droite_gauche = -1
         if self.vel.x < 0:        
             if hits_blocks_vertical_col:
-                if self.pos.x > hits_blocks_vertical_col[0].rect.left:               
-                    self.pos.x = hits_blocks_vertical_col[0].rect.right +1
+                if self.rect.left > hits_blocks_vertical_col[0].rect.left:    
                     self.vel.x = 0
-                    self.jumping = False
-                    self.droite_gauche = 1
 
