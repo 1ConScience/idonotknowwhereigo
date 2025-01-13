@@ -9,6 +9,7 @@ def nettoyage():
     pygame.sprite.Group.empty(enemies)
     pygame.sprite.Group.empty(invisible_walls)
     pygame.sprite.Group.empty(bullets)
+    pygame.sprite.Group.empty(blocks)
 
 pygame.init()
 
@@ -27,7 +28,8 @@ deadzone = 0.3#for joystick
  
 FramePerSec = pygame.time.Clock()
  
-screen = pygame.display.set_mode((WIDTH, HEIGHT),pygame.NOFRAME, 32)
+flags = pygame.NOFRAME
+screen = pygame.display.set_mode((WIDTH, HEIGHT), flags, 32, 0, 1)
 
 pygame.mouse.set_visible(False)
 
@@ -44,3 +46,4 @@ platforms = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
 invisible_walls = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
+blocks = pygame.sprite.Group()

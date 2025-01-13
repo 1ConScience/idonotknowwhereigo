@@ -19,3 +19,13 @@ class InvisibleWall(pygame.sprite.Sprite):
 
     def update(self):
         pass
+ 
+class Block(pygame.sprite.Sprite):
+    def __init__(self,pos,color):
+        super().__init__()
+        self.surf = pygame.Surface((80,80))
+        self.surf.fill(color)
+        self.rect = self.surf.get_rect(center = pos)
+
+    def update(self):
+        pass

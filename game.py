@@ -1,5 +1,5 @@
-from level_blue_basic_camera_test import *
 from level_blue_basic import *
+from level_blocks import *
 
-level_blue_basic_camera_test()
+level_blocks()
 nettoyage()
