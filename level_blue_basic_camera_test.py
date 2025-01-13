@@ -5,7 +5,7 @@ from Class.Player import *
 from Class.Text import *
 
 def generateHellZone(x_offet, y_offset):
-    hell_zone = Platform((1000, 20),(1200+x_offet, 300+y_offset))
+    hell_zone = Platform((1000, 20),(1200+x_offet, 300+y_offset),(255, 255, 255))
     all_sprites.add(hell_zone)
     platforms.add(hell_zone)
 
@@ -30,14 +30,14 @@ def level_blue_basic_camera_test():
     butterfly_txt = ButterflyText(1900, -50,(255, 255, 255))
     all_sprites.add(butterfly_txt)
 
-    PT01 = Platform((1000, 20),(0, 300))
+    PT01 = Platform((1000, 20),(0, 300),(255, 255, 255))
     all_sprites.add(PT01)
     platforms.add(PT01)
 
     P1 = Player()
     all_sprites.add(P1)
 
-    safe_zone = Platform((500, 20),(-750, 150))
+    safe_zone = Platform((500, 20),(-750, 150),(0, 0, 0))
     all_sprites.add(safe_zone)
     platforms.add(safe_zone)
 

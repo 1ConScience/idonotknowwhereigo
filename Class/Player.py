@@ -14,6 +14,8 @@ class Player(Character):
         self.armed = False
         self.bullets_direction = 1
 
+        self.zoom = 1
+
     def display_weapon(self):
         if self.armed:
             weapon_font = pygame.font.SysFont('Times New Roman', 30)
@@ -58,7 +60,14 @@ class Player(Character):
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN :
-            self.shot()
+            if event.button == 1:
+                self.shot()
+            if event.button == 4:
+                self.zoom += 0.1
+                print(self.zoom)
+            elif event.button == 5:
+                self.zoom -= 0.1
+                print(self.zoom)
 
         if event.type == pygame.KEYDOWN:  
             if event.key == pygame.K_ESCAPE:
