@@ -190,13 +190,14 @@ def gen_labyrinthLOLPRISON(x,y):
 
 def gen_labyrinth(x,y):
 
-    gen_mur_horizontal( x,                      y)
-    gen_coin_hautdroite(x+180,                  y-50) 
-    gen_mur_vertical(   x+180-50,               y-50+180)
-    gen_coin_basgauche( x+180-50-50,            y-50+180+180)
-    gen_mur_horizontal( x+180-50-50+180,        y-50+180+180-50)
-    gen_coin_basdroite( x+180-50-50+180+180,    y-50+180+180-50+50)
-    gen_mur_vertical(   x+180-50-50+180+180-50, y-50+180+180-50+50-180)
+    gen_mur_horizontal( x,                          y)
+    gen_coin_hautdroite(x+180,                      y-50) 
+    gen_mur_vertical(   x+180-50,                   y-50+180)
+    gen_coin_basgauche( x+180-50-50,                y-50+180+180)
+    gen_mur_horizontal( x+180-50-50+180,            y-50+180+180-50)
+    gen_coin_basdroite( x+180-50-50+180+180,        y-50+180+180-50+50)
+    gen_mur_vertical(   x+180-50-50+180+180-50,     y-50+180+180-50+50-180)
+    gen_coin_hautgauche(x+180-50-50+180+180-50-50,  y-50+180+180-50+50-180-180)
 
 
 
@@ -206,6 +207,10 @@ def level_labyrinth():
     PT01 = Platform((100, 20),(0, 300),(0, 0, 0))
     all_sprites.add(PT01)
     platforms.add(PT01)
+
+    block_vertical_col = BlockVerticalCol((-50, 250),(255, 255, 255))
+    all_sprites.add(block_vertical_col)
+    blocks_vertical_col.add(block_vertical_col)
 
     #gen_labyrinth_createdbycopilot(50,50)
 

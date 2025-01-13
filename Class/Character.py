@@ -28,8 +28,8 @@ class Character(pygame.sprite.Sprite):
  
     def jump(self): 
         hits_platforms = pygame.sprite.spritecollide(self, platforms, False)
-        hits_blocks = pygame.sprite.spritecollide(self, blocks_horizontal_col, False)
-        if (hits_platforms or hits_blocks) and not self.jumping:
+        hits_blocks_horizontal_col = pygame.sprite.spritecollide(self, blocks_horizontal_col, False)
+        if (hits_platforms or hits_blocks_horizontal_col) and not self.jumping:
             self.jumping = True
             self.vel.y = -15
  
@@ -72,12 +72,28 @@ class Character(pygame.sprite.Sprite):
 
         #BlockHorizontalCol collisions
         hits_blocks_vertical_col = pygame.sprite.spritecollide(self ,blocks_vertical_col, False)
-        if self.vel.x > 0:        
+        '''if self.vel.x > 0:        
             if hits_blocks_vertical_col:
                 if self.rect.right < hits_blocks_vertical_col[0].rect.right:    
                     self.vel.x = 0
         if self.vel.x < 0:        
             if hits_blocks_vertical_col:
                 if self.rect.left > hits_blocks_vertical_col[0].rect.left:    
+                    self.vel.x = 0'''
+
+
+        if self.vel.x > 0:        
+            if hits_blocks_vertical_col:
+                if self.pos.x < hits_blocks_vertical_col[0].rect.right:               
+                    self.pos.x = hits_blocks_vertical_col[0].rect.left -1
                     self.vel.x = 0
+                    self.jumping = False
+                    self.droite_gauche = -1
+        if self.vel.x < 0:        
+            if hits_blocks_vertical_col:
+                if self.pos.x > hits_blocks_vertical_col[0].rect.left:               
+                    self.pos.x = hits_blocks_vertical_col[0].rect.right +1
+                    self.vel.x = 0
+                    self.jumping = False
+                    self.droite_gauche = 1
 
