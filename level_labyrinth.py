@@ -190,6 +190,7 @@ def gen_labyrinthLOLPRISON(x,y):
 
 def gen_labyrinth(x,y):
 
+    '''
     gen_mur_horizontal( x,                          y)
     gen_coin_hautdroite(x+180,                      y-50) 
     gen_mur_vertical(   x+180-50,                   y-50+180)
@@ -198,7 +199,34 @@ def gen_labyrinth(x,y):
     gen_coin_basdroite( x+180-50-50+180+180,        y-50+180+180-50+50)
     gen_mur_vertical(   x+180-50-50+180+180-50,     y-50+180+180-50+50-180)
     gen_coin_hautgauche(x+180-50-50+180+180-50-50,  y-50+180+180-50+50-180-180)
+    '''
 
+
+    for i in range(10):
+        gen_mur_horizontal(x,y)
+        x = x + 180
+        y = y - 50
+        gen_coin_hautdroite(x,y) 
+        x = x - 50
+        y = y + 180
+        gen_mur_vertical(x,y)
+        x = x - 50
+        y = y + 180
+        gen_coin_basgauche(x,y)
+        x = x + 180
+        y = y - 50
+        gen_mur_horizontal(x,y)
+        x = x + 180
+        y = y + 50
+        gen_coin_basdroite(x,y)
+        x = x -50
+        y = y - 180
+        gen_mur_vertical(x,y)
+        x = x -50
+        y = y - 180
+        gen_coin_hautgauche(x,y)
+        x = x + 180
+        y = y - 50
 
 
 
@@ -207,31 +235,18 @@ def gen_labyrinth(x,y):
 
 def level_labyrinth():
 
-    PT01 = Platform((100, 20),(0, 300),(0, 0, 0))
-    all_sprites.add(PT01)
-    platforms.add(PT01)
-
-    block_vertical_col = BlockVerticalCol((-50, 250),(255, 255, 255))
-    all_sprites.add(block_vertical_col)
-    blocks_vertical_col.add(block_vertical_col)
-
-    platf = Platform((1000, 20),(-500, 300),(0, 0, 0))
+    platf = Platform((1000, 20),(-480, 300),(0, 0, 0))
     all_sprites.add(platf)
     platforms.add(platf)
-
-
 
     for i in range(5):
         block_vertical_colBIS = BlockVerticalCol((-500, 280-i*20),(255, 255, 255))
         all_sprites.add(block_vertical_colBIS)
         blocks_vertical_col.add(block_vertical_colBIS)
 
-
-
-
     #gen_labyrinth_createdbycopilot(50,50)
 
-    gen_labyrinth(125,250)
+    gen_labyrinth(110,250)
 
     P1 = Player()
     all_sprites.add(P1)
