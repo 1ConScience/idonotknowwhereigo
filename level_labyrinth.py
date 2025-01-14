@@ -144,19 +144,19 @@ def gen_coin_basdroite(x,y):
 
 
 def gen_mur_vertical(x,y):
-    for i in range(5):
+    for i in range(2):
         block_vertical_col = BlockVerticalCol((x-50, y-i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
-    for i in range(5):
+    for i in range(2):
         block_vertical_col = BlockVerticalCol((x+50, y-i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
-    for i in range(5):
+    for i in range(2):
         block_vertical_col = BlockVerticalCol((x-50, y+i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
-    for i in range(5):
+    for i in range(2):
         block_vertical_col = BlockVerticalCol((x+50, y+i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
@@ -226,7 +226,7 @@ def gen_labyrinth(x,y):
         y = y - 180
         gen_coin_hautgauche(x,y)
         x = x + 180
-        y = y - 50
+        y = y + 50
 
 
 
