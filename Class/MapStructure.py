@@ -34,7 +34,7 @@ class BlockVerticalCol(pygame.sprite.Sprite):
     def __init__(self,pos,color):
         super().__init__()
         self.surf = pygame.Surface((20,20))
-        self.surf.fill(color)
+        self.surf.fill((0,255,255))
         self.rect = self.surf.get_rect(center = pos)
 
     def update(self):

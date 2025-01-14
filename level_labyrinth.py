@@ -202,6 +202,9 @@ def gen_labyrinth(x,y):
 
 
 
+
+
+
 def level_labyrinth():
 
     PT01 = Platform((100, 20),(0, 300),(0, 0, 0))
@@ -211,6 +214,20 @@ def level_labyrinth():
     block_vertical_col = BlockVerticalCol((-50, 250),(255, 255, 255))
     all_sprites.add(block_vertical_col)
     blocks_vertical_col.add(block_vertical_col)
+
+    platf = Platform((1000, 20),(-500, 300),(0, 0, 0))
+    all_sprites.add(platf)
+    platforms.add(platf)
+
+
+
+    for i in range(5):
+        block_vertical_colBIS = BlockVerticalCol((-500, 280-i*20),(255, 255, 255))
+        all_sprites.add(block_vertical_colBIS)
+        blocks_vertical_col.add(block_vertical_colBIS)
+
+
+
 
     #gen_labyrinth_createdbycopilot(50,50)
 
