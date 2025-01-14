@@ -103,18 +103,18 @@ def gen_labyrinth_createdbycopilot(x,y):
 
 #╔═╗╔═╗╔═╗╔═╗╔═╗╔═╗╔═╗   ╔ ═ ╗ ╚═╗ ╔═╗ ╔═╗
 def gen_coin_hautdroite(x,y):
-    for i in range(5):   
-        block_vertical_col = BlockVerticalCol((x, y+i*20),(255, 255, 255))
+    for i in range(4):   
+        block_vertical_col = BlockVerticalCol((x, y+20+i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
-    for i in range(5):
-        block_horizontal_col = BlockHorizontalCol((x-i*20, y),(255, 255, 255))
+    for i in range(4):
+        block_horizontal_col = BlockHorizontalCol((x-i*20-20, y),(255, 255, 255))
         all_sprites.add(block_horizontal_col)
         blocks_horizontal_col.add(block_horizontal_col)
 
 def gen_coin_hautgauche(x,y):
-    for i in range(5):   
-        block_vertical_col = BlockVerticalCol((x, y+i*20),(255, 255, 255))
+    for i in range(4):   
+        block_vertical_col = BlockVerticalCol((x, y+20+i*20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
     for i in range(5):
@@ -127,8 +127,8 @@ def gen_coin_basgauche(x,y):
         block_horizontal_col = BlockHorizontalCol((x+i*20, y),(255, 255, 255))
         all_sprites.add(block_horizontal_col)
         blocks_horizontal_col.add(block_horizontal_col)
-    for i in range(5):
-        block_vertical_col = BlockVerticalCol((x, y-i*20),(255, 255, 255))
+    for i in range(4):
+        block_vertical_col = BlockVerticalCol((x, y-i*20-20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
 
@@ -137,8 +137,8 @@ def gen_coin_basdroite(x,y):
         block_horizontal_col = BlockHorizontalCol((x-i*20, y),(255, 255, 255))
         all_sprites.add(block_horizontal_col)
         blocks_horizontal_col.add(block_horizontal_col)
-    for i in range(5):
-        block_vertical_col = BlockVerticalCol((x, y-i*20),(255, 255, 255))
+    for i in range(4):
+        block_vertical_col = BlockVerticalCol((x, y-i*20-20),(255, 255, 255))
         all_sprites.add(block_vertical_col)
         blocks_vertical_col.add(block_vertical_col)
 
@@ -170,7 +170,7 @@ def gen_mur_horizontal(x,y):
         block_horizontal_col = BlockHorizontalCol((x-i*20, y-50),(255, 255, 255))
         all_sprites.add(block_horizontal_col)
         blocks_horizontal_col.add(block_horizontal_col)
-    for i in range(5):
+    for i in range(4):
         block_horizontal_col = BlockHorizontalCol((x+i*20, y+50),(255, 255, 255))
         all_sprites.add(block_horizontal_col)
         blocks_horizontal_col.add(block_horizontal_col)
@@ -185,8 +185,8 @@ def gen_labyrinthLOLPRISON(x,y):
     gen_coin_basgauche(x-200,y+200)
     gen_coin_hautdroite(x+200,y-200)
     gen_coin_hautgauche(x-200,y-200)
-    gen_mur_horizontal(x,y)
-    gen_mur_vertical(x,y)
+    #gen_mur_horizontal(x,y)
+    #gen_mur_vertical(x,y)
 
 def gen_labyrinth(x,y):
 
@@ -208,10 +208,10 @@ def gen_labyrinth(x,y):
         y = y - 50
         gen_coin_hautdroite(x,y) 
         x = x - 50
-        y = y + 180
+        y = y + 140
         gen_mur_vertical(x,y)
         x = x - 50
-        y = y + 180
+        y = y + 140
         gen_coin_basgauche(x,y)
         x = x + 180
         y = y - 50
@@ -220,22 +220,22 @@ def gen_labyrinth(x,y):
         y = y + 50
         gen_coin_basdroite(x,y)
         x = x -50
-        y = y - 180
+        y = y - 140
         gen_mur_vertical(x,y)
         x = x -50
-        y = y - 180
+        y = y - 140
         gen_coin_hautgauche(x,y)
         x = x + 180
         y = y + 50
 
 
-
+#OKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKO
 
 
 
 def level_labyrinth():
 
-    platf = Platform((1000, 20),(-480, 300),(0, 0, 0))
+    platf = Platform((1100, 20),(-480, 300),(0, 0, 0))
     all_sprites.add(platf)
     platforms.add(platf)
 
@@ -244,9 +244,7 @@ def level_labyrinth():
         all_sprites.add(block_vertical_colBIS)
         blocks_vertical_col.add(block_vertical_colBIS)
 
-    #gen_labyrinth_createdbycopilot(50,50)
-
-    gen_labyrinth(110,250)
+    gen_labyrinth(150,250)
 
     P1 = Player()
     all_sprites.add(P1)
@@ -254,8 +252,18 @@ def level_labyrinth():
     spanw_txt = Text("†",P1.spawn.x, P1.spawn.y,(255, 255, 255))
     all_sprites.add(spanw_txt)
 
-    blood_txt = Text("+200... +200... Toujours plus de...",0, +150,(255, 255, 255))
+    blood_txt = Text("+200... +200... Toujours plus de...",0, +250,(255, 255, 255))
     all_sprites.add(blood_txt)
+
+    for i in range(50):
+        block_vertical_colBIS = BlockVerticalCol((50, 180-i*20),(255, 255, 255))
+        all_sprites.add(block_vertical_colBIS)
+        blocks_vertical_col.add(block_vertical_colBIS)
+
+    for i in range(50):
+        block_vertical_colBIS = BlockVerticalCol((-200, 180-i*20),(255, 255, 255))
+        all_sprites.add(block_vertical_colBIS)
+        blocks_vertical_col.add(block_vertical_colBIS)
 
     while 1:
         for event in pygame.event.get():

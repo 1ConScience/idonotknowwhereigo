@@ -1,9 +1,9 @@
 from Class.MapStructure import *
 
 
-def gen_level_by_the_creator():
+def gen_level_by_the_creator(x_offset,y_offset):
 
-    image = pygame.image.load("assets/level_design.png")
+    image = pygame.image.load("assets/lvldesign.jpg")
 
     image_width = image.get_width()
     image_height = image.get_height()
@@ -19,7 +19,7 @@ def gen_level_by_the_creator():
             if color == (0,0,0,255):
                 matrice[y][x] = 1
                 
-                bl = BlockHorizontalCol((x, y),(0, 255, 255))
+                bl = BlockHorizontalCol((x_offset+x*20, y_offset+y*20),(0, 255, 255))
                 all_sprites.add(bl)
                 blocks_horizontal_col.add(bl)
 

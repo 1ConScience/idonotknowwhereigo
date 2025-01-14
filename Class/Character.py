@@ -32,6 +32,11 @@ class Character(pygame.sprite.Sprite):
         if (hits_platforms or hits_blocks_horizontal_col) and not self.jumping:
             self.jumping = True
             self.vel.y = -15
+
+        hits_blocks_vertical_col = pygame.sprite.spritecollide(self, blocks_vertical_col, False)
+        if hits_blocks_vertical_col:
+            self.jumping = True
+            self.vel.y = -15
  
     def cancel_jump(self):
         if self.jumping:

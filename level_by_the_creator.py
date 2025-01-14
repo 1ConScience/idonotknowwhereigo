@@ -9,7 +9,7 @@ from the_creator import *
 
 def level_by_the_creator():
 
-    gen_level_by_the_creator()
+    gen_level_by_the_creator(-2000,-2000)
 
     PT01 = Platform((100, 20),(0, 300),(0, 0, 0))
     all_sprites.add(PT01)
